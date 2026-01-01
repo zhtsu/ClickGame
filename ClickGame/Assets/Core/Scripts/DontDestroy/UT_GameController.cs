@@ -8,6 +8,7 @@ public class UT_GameController : MonoBehaviour
     [SerializeField] private UT_SO_PrefabConfig _PrefabConfig;
     [SerializeField] private UT_SO_UIConfig _UIConfig;
 
+    private UT_Boot _Boot = new CG_Boot();
     private UT_ServiceContainer _ServiceContainer;
 
     private void Awake()
@@ -26,21 +27,18 @@ public class UT_GameController : MonoBehaviour
         Params.UIConfig = _UIConfig;
         Params.AudioConfig = _AudioConfig;
 
-        var Results_SCP = await InstantiateAsync(_GameConfig.ServiceContainerPrefab).ToUniTask();
-        if (Results_SCP.Length > 0)
-        {
-            _ServiceContainer = Results_SCP[0].GetComponent<UT_ServiceContainer>();
-            if (_ServiceContainer == null)
-            {
-                Debug.LogError("ServiceContainer Component is missing in the prefab!");
-            }
-        }
+        GameObject ServiceContainerInst = Instantiate(_GameConfig.ServiceContainerPrefab);
+        if (ServiceContainerInst != null)
+            _ServiceContainer = ServiceContainerInst.GetComponent<UT_ServiceContainer>();
 
         if (_ServiceContainer != null)
             await _ServiceContainer.Initialize(Params);
 
         if (LoadingScreen != null)
             Destroy(LoadingScreen);
+
+        if (_Boot != null)
+            _Boot.Initialize(_ServiceContainer);
     }
 
     private void OnDestroy()

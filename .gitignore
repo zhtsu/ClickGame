@@ -1,2 +1,7 @@
 Build/
-UnityTemplate/Assets/TextMesh Pro/Resources/
+ClickGame/Assets/TextMesh Pro/Resources/
+ClickGame/Assets/Ink
+ClickGame/Assets/Ink.meta
+ClickGame/Assets/Plugins/PrimeTween
+ClickGame/Assets/Plugins/PrimeTween.meta
+ClickGame/Assets/ClickGame/Addressable/Videos

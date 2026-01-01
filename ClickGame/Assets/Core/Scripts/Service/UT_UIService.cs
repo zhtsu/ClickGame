@@ -56,7 +56,7 @@ public class UT_UIService : UT_Service, UT_IUIService
         _ActiveUIStack.Clear();
     }
 
-    public void OpenUI(string UITypeKey, UT_UIParams Params = null)
+    public void OpenUI(string UITypeKey, UT_FUIParams Params = null)
     {
         if (_UIRoot == null)
             return;
@@ -94,16 +94,17 @@ public class UT_UIService : UT_Service, UT_IUIService
         }
     }
 
-    private void OpenUI_Internal(UT_UIView UI, UT_UIParams Params, UT_SO_UIDescriptor UIDesc)
+    private void OpenUI_Internal(UT_UIView UI, UT_FUIParams Params, UT_SO_UIDescriptor UIDesc)
     {
         if (_ActiveUIStack.Count > 0)
             _ActiveUIStack.Peek().OnPause();
 
-        UI.Initialize(Params);
-        UI.OnOpen();
-
         RectTransform Rect = UI.GetComponent<RectTransform>();
         SetFullStretch(Rect);
+
+        UI.ApplySafeArea();
+        UI.Initialize(Params);
+        UI.OnOpen();
 
         Transform LayerTransform = _UIRoot.GetLayerObject(UIDesc.Layer).transform;
         UI.transform.SetParent(LayerTransform, false);

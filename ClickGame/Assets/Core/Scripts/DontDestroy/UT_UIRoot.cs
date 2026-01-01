@@ -11,6 +11,7 @@ public class UT_UIRoot : MonoBehaviour
 
     private void Awake()
     {
+        gameObject.name = "UIRoot";
         DontDestroyOnLoad(this);
     }
 
