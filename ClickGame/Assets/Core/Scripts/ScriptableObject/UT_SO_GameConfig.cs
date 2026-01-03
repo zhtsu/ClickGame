@@ -9,6 +9,9 @@ public class UT_SO_GameConfig : ScriptableObject
     [SerializeField] private GameObject _MainCameraPrefab;
     public GameObject MainCameraPrefab => _MainCameraPrefab;
 
+    [SerializeField] private GameObject _EventSystemPrefab;
+    public GameObject EventSystemPrefab => _EventSystemPrefab;
+
     [SerializeField] private GameObject _VideoRootPrefab;
     public GameObject VideoRootPrefab => _VideoRootPrefab;
 

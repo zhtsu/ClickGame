@@ -115,7 +115,8 @@ public class CG_VideoService : UT_Service, CG_IVideoService
             if (OnLoopPointReached != null)
                 CachedInfo.VideoPlayer.loopPointReached -= OnLoopPointReached;
             
-            CachedInfo.VideoPlayer.Stop();
+            if (CachedInfo.VideoPlayer != null)
+                CachedInfo.VideoPlayer.Stop();
         }
     }
 }

@@ -832,6 +832,7 @@ GameObject:
   - component: {fileID: 6896516561956487639}
   - component: {fileID: 3614706654670744562}
   - component: {fileID: 3045142008879904244}
+  - component: {fileID: 4560770096376252819}
   m_Layer: 0
   m_Name: MainUI
   m_TagString: Untagged
@@ -896,6 +897,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TypeKey: MainUI
   _SafeArea: {fileID: 0}
+  _HeadButton: {fileID: 5134172273007712425}
+  _MissionButton: {fileID: 8036007384515805712}
+  _TalentButton: {fileID: 6228670285416239604}
+  _MenuButton: {fileID: 3627486279766222412}
+--- !u!114 &4560770096376252819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4530748260199928371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &4785165305814331845
 GameObject:
   m_ObjectHideFlags: 0
