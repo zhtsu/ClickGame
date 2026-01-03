@@ -5,7 +5,7 @@ public abstract class UT_FUIParams
 
 }
 
-public abstract class UT_UIView : MonoBehaviour
+public abstract class UT_UIBase : MonoBehaviour
 {
     [SerializeField]
     private string _TypeKey;

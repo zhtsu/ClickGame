@@ -232,6 +232,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _TypeKey: VideoRenderer
   _SafeArea: {fileID: 8312337079257438456}
+  _UpVideoImage: {fileID: 3684684335599203401}
+  _DownVideoImage: {fileID: 5776453281956638553}
+  _UpVideoList:
+  - E05B1
+  - E05B2
+  - E05B3
+  - E05B4
+  _DownVideo: B0301
 --- !u!1 &7975773250883155024
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,8 +20,8 @@ public class UT_UIService : UT_Service, UT_IUIService
     private UT_UIRoot _UIRoot;
     private UT_IPrefabService _IPrefabService;
 
-    private Dictionary<string, UT_UIView> _CachedUIDict = new Dictionary<string, UT_UIView>();
-    private Stack<UT_UIView> _ActiveUIStack = new Stack<UT_UIView>();
+    private Dictionary<string, UT_UIBase> _CachedUIDict = new Dictionary<string, UT_UIBase>();
+    private Stack<UT_UIBase> _ActiveUIStack = new Stack<UT_UIBase>();
 
     public UT_UIService(UT_SO_UIConfig UIConfig, UT_IPrefabService IPrefabService)
     {
@@ -68,7 +68,7 @@ public class UT_UIService : UT_Service, UT_IUIService
         if (UIDesc == null)
             return;
 
-        if (_CachedUIDict.TryGetValue(UITypeKey, out UT_UIView CachedUI))
+        if (_CachedUIDict.TryGetValue(UITypeKey, out UT_UIBase CachedUI))
         {
             OpenUI_Internal(CachedUI, Params, UIDesc);
             return;
@@ -81,7 +81,7 @@ public class UT_UIService : UT_Service, UT_IUIService
             return;
         }
         GameObject UIObj = GameObject.Instantiate(Prefab);
-        UT_UIView UIComp = UIObj.GetComponent<UT_UIView>();
+        UT_UIBase UIComp = UIObj.GetComponent<UT_UIBase>();
         if (UIComp != null)
         {
             _CachedUIDict.Add(UITypeKey, UIComp);
@@ -94,7 +94,7 @@ public class UT_UIService : UT_Service, UT_IUIService
         }
     }
 
-    private void OpenUI_Internal(UT_UIView UI, UT_FUIParams Params, UT_SO_UIDescriptor UIDesc)
+    private void OpenUI_Internal(UT_UIBase UI, UT_FUIParams Params, UT_SO_UIDescriptor UIDesc)
     {
         if (_ActiveUIStack.Count > 0)
             _ActiveUIStack.Peek().OnPause();
@@ -118,7 +118,7 @@ public class UT_UIService : UT_Service, UT_IUIService
         if (_ActiveUIStack.Count == 0)
             return;
 
-        UT_UIView TopUI = _ActiveUIStack.Peek();
+        UT_UIBase TopUI = _ActiveUIStack.Peek();
 
         TopUI.OnClose();
         TopUI.transform.SetParent(null);
@@ -134,7 +134,7 @@ public class UT_UIService : UT_Service, UT_IUIService
     {
         while (_ActiveUIStack.Count > 0)
         {
-            UT_UIView TopUI = _ActiveUIStack.Pop();
+            UT_UIBase TopUI = _ActiveUIStack.Pop();
             TopUI.OnClose();
             TopUI.transform.SetParent(null);
             TopUI.enabled = false;

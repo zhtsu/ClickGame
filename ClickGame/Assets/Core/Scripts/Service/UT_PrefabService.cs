@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.Video;
 
 public class UT_PrefabService : UT_Service, UT_IPrefabService
 {
@@ -10,6 +11,7 @@ public class UT_PrefabService : UT_Service, UT_IPrefabService
 
     private UT_SO_PrefabConfig _PrefabConfig;
     private Dictionary<Hash128, AsyncOperationHandle<GameObject>> _PrefabHandleDict = new Dictionary<Hash128, AsyncOperationHandle<GameObject>>();
+    private Dictionary<Hash128, AsyncOperationHandle<VideoClip>> _VideoHandleDict = new Dictionary<Hash128, AsyncOperationHandle<VideoClip>>();
 
     public UT_PrefabService(UT_SO_PrefabConfig PrefabConfig)
     {
@@ -31,6 +33,17 @@ public class UT_PrefabService : UT_Service, UT_IPrefabService
             }
         }
 
+        foreach (string Address in _PrefabConfig.VideoAddressList)
+        {
+            if (string.IsNullOrEmpty(Address) == false)
+            {
+                AsyncOperationHandle<VideoClip> Handle = Addressables.LoadAssetAsync<VideoClip>(Address);
+                LoadTasks.Add(Handle.ToUniTask());
+
+                _VideoHandleDict.Add(Hash128.Compute(Address), Handle);
+            }
+        }
+
         await UniTask.WhenAll(LoadTasks);
     }
 
@@ -40,13 +53,28 @@ public class UT_PrefabService : UT_Service, UT_IPrefabService
         {
             Addressables.Release(Handle);
         }
-
         _PrefabHandleDict.Clear();
+
+        foreach (AsyncOperationHandle<VideoClip> Handle in _VideoHandleDict.Values)
+        {
+            Addressables.Release(Handle);
+        }
+        _VideoHandleDict.Clear();
     }
 
     public GameObject GetPrefab(string Address)
     {
         if (_PrefabHandleDict.TryGetValue(Hash128.Compute(Address), out AsyncOperationHandle<GameObject> OutHandle))
+        {
+            return OutHandle.Result;
+        }
+
+        return null;
+    }
+
+    public VideoClip GetVideo(string Address)
+    {
+        if (_VideoHandleDict.TryGetValue(Hash128.Compute(Address), out AsyncOperationHandle<VideoClip> OutHandle))
         {
             return OutHandle.Result;
         }
