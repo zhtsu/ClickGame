@@ -15,11 +15,13 @@ public class CG_UI_VideoRenderer : UT_UIBase
     [SerializeField] private RawImage _UpVideoImage;
     [SerializeField] private RawImage _DownVideoImage;
     [SerializeField] private string[] _UpVideoList;
+    [SerializeField] private string _DefaultDownVideo;
     [SerializeField] private string[] _DownVideoList;
 
     private CG_IVideoService _IVideoService;
     private UT_IEventService _IEventService;
 
+    private Queue<string> _NextDownVideoQueue = new Queue<string>();
     private bool _IsPlayHeadClickAnim = false;
 
     public override void Initialize(UT_FUIParams Params)
@@ -49,35 +51,30 @@ public class CG_UI_VideoRenderer : UT_UIBase
         {
             _IVideoService.LoadVideo(VideoAddress);
         }
-    }
 
-    private void SetUpVideo(string VideoAddress)
-    {
-        _UpVideoImage.texture = _IVideoService.PlayVideo(VideoAddress, false, UpdateUpVideo);
-    }
-
-    private void SetDownVideo(string VideoAddress)
-    {
-        _DownVideoImage.texture = _IVideoService.PlayVideo(VideoAddress, true);
-    }
-
-    private void PlayClickHeadAnim(string VideoAddress)
-    {
-        _DownVideoImage.texture = _IVideoService.PlayVideo(VideoAddress, false, ResetDownVideo);
+        _IVideoService.LoadVideo(_DefaultDownVideo);
     }
 
     private void UpdateUpVideo(VideoPlayer VP)
     {
         int RandomIndex = Random.Range(0, _UpVideoList.Length);
-        SetUpVideo(_UpVideoList[RandomIndex]);
+        _UpVideoImage.texture = _IVideoService.PlayVideo(_UpVideoList[RandomIndex], false, UpdateUpVideo);
+    }
+
+    private void UpdateDownVideo(VideoPlayer VP)
+    {
+        if (_NextDownVideoQueue.Count > 0)
+        {
+            string NextVideoAddress = _NextDownVideoQueue.Dequeue();
+            _DownVideoImage.texture = _IVideoService.PlayVideo(NextVideoAddress, false, ResetDownVideo);
+        }
     }
 
     private void ResetDownVideo(VideoPlayer VP)
     {
         _IsPlayHeadClickAnim = false;
 
-        if (_DownVideoList.Length > 0)
-            SetDownVideo(_DownVideoList[0]);
+        _DownVideoImage.texture = _IVideoService.PlayVideo(_DefaultDownVideo, true, UpdateDownVideo);
     }
 
     private void OnDestroy()
@@ -102,7 +99,7 @@ public class CG_UI_VideoRenderer : UT_UIBase
 
         _IsPlayHeadClickAnim = true;
 
-        int RandomIndex = Random.Range(0, _DownVideoList.Length);
-        PlayClickHeadAnim(_DownVideoList[RandomIndex]);
+        int RandomIndex = Random.Range(1, _DownVideoList.Length);
+        _NextDownVideoQueue.Enqueue(_DownVideoList[RandomIndex]);
     }
 }
