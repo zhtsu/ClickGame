@@ -3,8 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameConfig", menuName = "UT Config/Game Config")]
 public class UT_SO_GameConfig : ScriptableObject
 {
-    [SerializeField] private GameObject _BootPrefab;
-    public GameObject BootPrefab => _BootPrefab;
+    [SerializeField] private GameObject _PostProcessVolumePrefab;
+    public GameObject PostProcessVolumePrefab => _PostProcessVolumePrefab;
 
     [SerializeField] private GameObject _MainCameraPrefab;
     public GameObject MainCameraPrefab => _MainCameraPrefab;

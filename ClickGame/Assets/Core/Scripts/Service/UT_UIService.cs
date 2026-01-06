@@ -19,14 +19,16 @@ public class UT_UIService : UT_Service, UT_IUIService
     private UT_SO_UIConfig _UIConfig;
     private UT_UIRoot _UIRoot;
     private UT_IPrefabService _IPrefabService;
+    private Camera _MainCamera;
 
     private Dictionary<string, UT_UIBase> _CachedUIDict = new Dictionary<string, UT_UIBase>();
     private Stack<UT_UIBase> _ActiveUIStack = new Stack<UT_UIBase>();
 
-    public UT_UIService(UT_SO_UIConfig UIConfig, UT_IPrefabService IPrefabService)
+    public UT_UIService(UT_SO_UIConfig UIConfig, UT_IPrefabService IPrefabService, Camera InMainCamera)
     {
         _UIConfig = UIConfig;
         _IPrefabService = IPrefabService;
+        _MainCamera = InMainCamera;
     }
 
     public override UniTask Initialize()
@@ -41,6 +43,11 @@ public class UT_UIService : UT_Service, UT_IUIService
         }
 
         _UIRoot = UnityEngine.Object.Instantiate(_UIConfig.UIRootPrefab)?.GetComponent<UT_UIRoot>();
+
+        Canvas CanvasComp = _UIRoot.GetComponent<Canvas>();
+        if (CanvasComp != null)
+            CanvasComp.worldCamera = _MainCamera;
+
         return UniTask.CompletedTask;
     }
 

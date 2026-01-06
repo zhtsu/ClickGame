@@ -18,7 +18,8 @@ public class UT_GameController : MonoBehaviour
 
     private async void Start()
     {
-        Instantiate(_GameConfig.MainCameraPrefab);
+        Instantiate(_GameConfig.PostProcessVolumePrefab);
+        GameObject CameraObj = Instantiate(_GameConfig.MainCameraPrefab);
         Instantiate(_GameConfig.EventSystemPrefab);
         GameObject LoadingScreen = Instantiate(_UIConfig.LoadingScreenPrefab);
 
@@ -27,6 +28,7 @@ public class UT_GameController : MonoBehaviour
         Params.PrefabConfig = _PrefabConfig;
         Params.UIConfig = _UIConfig;
         Params.AudioConfig = _AudioConfig;
+        Params.MainCamera = CameraObj.GetComponent<Camera>();
 
         GameObject ServiceContainerInst = Instantiate(_GameConfig.ServiceContainerPrefab);
         if (ServiceContainerInst != null)

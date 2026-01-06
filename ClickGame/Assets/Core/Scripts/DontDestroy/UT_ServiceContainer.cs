@@ -8,6 +8,7 @@ public struct UT_FServiceContainerInitParams
     public UT_SO_PrefabConfig PrefabConfig;
     public UT_SO_UIConfig UIConfig;
     public UT_SO_AudioConfig AudioConfig;
+    public Camera MainCamera;
 }
 
 public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
@@ -51,7 +52,7 @@ public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
         RegistryService<UT_IPrefabService>(_PrefabService);
         await _PrefabService.Initialize();
 
-        _UIService = new UT_UIService(Params.UIConfig, _PrefabService);
+        _UIService = new UT_UIService(Params.UIConfig, _PrefabService, Params.MainCamera);
         RegistryService<UT_IUIService>(_UIService);
         _ = _UIService.Initialize();
 
