@@ -18,7 +18,6 @@ public class UT_GameController : MonoBehaviour
 
     private async void Start()
     {
-        Instantiate(_GameConfig.PostProcessVolumePrefab);
         GameObject CameraObj = Instantiate(_GameConfig.MainCameraPrefab);
         Instantiate(_GameConfig.EventSystemPrefab);
         GameObject LoadingScreen = Instantiate(_UIConfig.LoadingScreenPrefab);

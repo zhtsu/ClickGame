@@ -28,6 +28,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
-    m_Colors: []
+    m_Floats:
+    - _AspectRatio: 0.45454547
+    - _Size: 0.02
+    - _Strength: -0.02
+    - _WaveDistanceFromCenter: -0.1
+    m_Colors:
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WaveSpawnPosition: {r: 0.29114583, g: 0.5452178, b: 0, a: 0}
   m_BuildTextureStacks: []

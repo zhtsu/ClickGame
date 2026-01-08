@@ -18,12 +18,11 @@ public class RippleRenderPassFeature : ScriptableRendererFeature
             if (FeatureMaterial == null || VolumeComponent == null)
                 return;
 
+            FeatureMaterial.SetFloat("_AspectRatio", VolumeComponent.AspectRatio.value);
             FeatureMaterial.SetFloat("_Size", VolumeComponent.Size.value);
             FeatureMaterial.SetFloat("_Strength", VolumeComponent.Strength.value);
-            FeatureMaterial.SetVector("_RingSpawnPosition", VolumeComponent.RingSpawnPosition.value);
+            FeatureMaterial.SetVector("_WaveSpawnPosition", VolumeComponent.WaveSpawnPosition.value);
             FeatureMaterial.SetFloat("_WaveDistanceFromCenter", VolumeComponent.WaveDistanceFromCenter.value);
-        
-            FeatureMaterial.SetColor("_TestColor", VolumeComponent.TestColor.value);
         }
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class CG_Boot : UT_Boot
@@ -7,6 +8,7 @@ public class CG_Boot : UT_Boot
         UT_IUIService IUIService = ServiceContainer.GetService<UT_IUIService>();
         CG_IVideoService IVideoService = ServiceContainer.GetService<CG_IVideoService>();
         UT_IEventService IEventService = ServiceContainer.GetService<UT_IEventService>();
+        CG_IPostProcessService IPostProcessService = ServiceContainer.GetService<CG_IPostProcessService>();
 
         CG_FUIParams_VideoRenderer VRParams = new();
         VRParams.IVideoService = IVideoService;

@@ -21,7 +21,9 @@ public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
     private UT_UIService _UIService = null;
     private UT_GameStateService _GameStateService = null;
     private UT_AudioService _AudioService = null;
+
     private CG_VideoService _VideoService = null;
+    private CG_PostProcessService _PostProcessService = null;
 
     public TServiceInterface GetService<TServiceInterface>()
     {
@@ -43,6 +45,10 @@ public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
     {
         if (_EventService != null)
             _EventService.Update();
+        if (_CommandService != null)
+            _CommandService.Update();
+        if (_PostProcessService != null)
+            _PostProcessService.Update();
     }
 
     public async UniTask Initialize(UT_FServiceContainerInitParams Params)
@@ -75,6 +81,10 @@ public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
         _VideoService = new CG_VideoService(Params.GameConfig.VideoRootPrefab, _PrefabService);
         RegistryService<CG_IVideoService>(_VideoService);
         _ = _VideoService.Initialize();
+
+        _PostProcessService = new CG_PostProcessService(Params.GameConfig.PostProcessVolumePrefab);
+        RegistryService<CG_IPostProcessService>(_PostProcessService);
+        _ = _PostProcessService.Initialize();
     }
 
     public void Destroy()
@@ -86,6 +96,7 @@ public class UT_ServiceContainer : MonoBehaviour, UT_IServiceContainer
         _PrefabService?.Destroy();
         _AudioService?.Destroy();
         _VideoService?.Destroy();
+        _PostProcessService?.Destroy();
     }
 
     private void Awake()
